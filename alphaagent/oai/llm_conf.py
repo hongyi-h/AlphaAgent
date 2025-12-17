@@ -33,12 +33,12 @@ class LLMSettings(ExtendedBaseSettings):
 
     # Chat configs
     openai_api_key: str = ""  # TODO: simplify the key design.
-    openai_base_url: str = ""
+    openai_base_url: str = "https://integrate.api.nvidia.com/v1"
     chat_openai_api_key: str = ""
     chat_azure_api_base: str = ""
     chat_azure_api_version: str = ""
-    chat_model: str = "gpt-4-turbo"
-    reasoning_model: str = ""
+    chat_model: str = "meta/llama-3.1-405b-instruct"
+    reasoning_model: str = "meta/llama-3.1-405b-instruct"
     chat_max_tokens: int = 3000
     chat_temperature: float = 0.5
     chat_stream: bool = True
@@ -55,10 +55,10 @@ class LLMSettings(ExtendedBaseSettings):
     embedding_openai_api_key: str = ""
     embedding_azure_api_base: str = ""
     embedding_azure_api_version: str = ""
-    embedding_model: str = ""
+    embedding_model: str = "nvidia/llama-3.2-nemoretriever-1b-vlm-embed-v1"
     embedding_max_str_num: int = 50
     embedding_api_key: str = ""
-    embedding_base_url: str = ""
+    embedding_base_url: str = "https://integrate.api.nvidia.com/v1"
 
     # offline llama2 related config
     use_llama2: bool = False

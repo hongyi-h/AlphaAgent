@@ -612,6 +612,9 @@ class APIBackend:
                     response = self.embedding_client.embeddings.create(
                         model=self.embedding_model,
                         input=sliced_filtered_input_content_list,
+                        extra_body={
+                            'input_type': 'passage',
+                        }
                     )
                 for index, data in enumerate(response.data):
                     content_to_embedding_dict[sliced_filtered_input_content_list[index]] = data.embedding
@@ -788,7 +791,12 @@ class APIBackend:
                 json_start = resp.find('{')
                 json_end = resp.rfind('}') + 1
                 resp = resp[json_start:json_end]
-                json.loads(resp)
+                try:
+                    json.loads(resp)
+                except json.JSONDecodeError:
+                    # Attempt to repair JSON: missing comma between } and "
+                    resp = re.sub(r'}(\s*)"', r'},\1"', resp)
+                    json.loads(resp)
         if self.dump_chat_cache:
             self.cache.chat_set(input_content_json, resp)
         return resp, finish_reason
